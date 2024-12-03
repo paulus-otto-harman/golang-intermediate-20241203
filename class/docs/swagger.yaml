@@ -1,0 +1,170 @@
+basePath: /
+definitions:
+  domain.HTTPResponse:
+    properties:
+      data: {}
+      description:
+        type: string
+      error_code:
+        type: string
+      status:
+        type: boolean
+    type: object
+  domain.User:
+    properties:
+      password:
+        example: password
+        type: string
+      username:
+        example: admin
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: lumoshive.academy@gmail.com
+    name: Paulus Otto Harman
+    url: https://academy.lumoshive.com/contact-us
+  description: This is a sample server for a Swagger API.
+  license:
+    name: Lumoshive Academy
+    url: https://academy.lumoshive.com
+  termsOfService: http://example.com/terms/
+  title: Voucher API
+  version: "1.0"
+paths:
+  /admin/vouchers:
+    get:
+      consumes:
+      - application/json
+      description: List of voucher
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: list of vouchers
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+      security:
+      - token: []
+      - ID-KEY: []
+      summary: list of vouchers
+      tags:
+      - Vouchers
+    post:
+      consumes:
+      - application/json
+      description: Add voucher
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: voucher added
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+      summary: add voucher
+      tags:
+      - Admin Vouchers
+  /admin/vouchers/:voucher_id:
+    delete:
+      consumes:
+      - application/json
+      description: delete a voucher
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successfully update voucher
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+      summary: delete a voucher
+      tags:
+      - Admin Vouchers
+    put:
+      consumes:
+      - application/json
+      description: update a voucher
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successfully update voucher
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+      summary: update a voucher
+      tags:
+      - Admin Vouchers
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: authenticate user
+      parameters:
+      - description: ' '
+        in: body
+        name: domain.User
+        required: true
+        schema:
+          $ref: '#/definitions/domain.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful login
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/domain.HTTPResponse'
+      summary: Admin login
+      tags:
+      - Authentication
+schemes:
+- http
+securityDefinitions:
+  ID-KEY:
+    in: header
+    name: ID-KEY
+    type: apiKey
+  token:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"
